@@ -1,0 +1,73 @@
+<?php
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Slim\Psr7\Response as ResponseMW;
+
+require_once './models/Empleado.php';
+require_once './models/Platos.php';
+
+class EmpleadoMiddleware {
+    public function EmpleadoDisponible(Request $request, RequestHandler $handler) : ResponseMW 
+    {
+        try {
+            $parametros = $request->getParsedBody();
+            $idEmpelado = $parametros['moso'];
+
+            $empleado = Empleado::obtenerEmpleado($idEmpelado);
+            $response = new ResponseMW();
+
+            if (!empty($empleado)) {
+                if (strcmp($empleado->estado, "desocupado") === 0) {
+                    $response = $handler->handle($request);
+                } else {
+                    $response->getBody()->write("El empleado NO está desocupado");
+                }
+            } else {
+                $response->getBody()->write("No se encontró el empleado con el ID: " . json_encode($idEmpelado));
+            }
+        } catch (Exception $e) {
+            $response = new ResponseMW();
+            $response->getBody()->write("Algo Falló: " .  json_encode($e));
+        }
+        return $response;
+    }
+    public function EmpleadoEsDelTipoDePedido(Request $request, RequestHandler $handler) : ResponseMW 
+    {
+        try {
+            $parametros = $request->getParsedBody();
+            $idEmpelado = $parametros['moso'];
+            $nombreDelPlato = $parametros['nombre'];
+
+            $plato = Platos::obtenerPlatoNombre($nombreDelPlato);
+            $moso = Empleado::obtenerEmpleado($idEmpelado);
+
+            $response = new ResponseMW();
+            if (!empty($plato) && !empty($moso)) {
+                switch ($moso->rol) {
+                    case 'bartender':
+                        $tipo = 'barra';
+                        break;
+                    case 'cervecero':
+                        $tipo = 'chopera';
+                        break;
+                    case 'mozo':
+                        $tipo = 'candyBar';
+                        break;
+                    default:
+                        $tipo = 'cocina';
+                        break;
+                }
+                if (strcmp($plato->tipo, $tipo) === 0) {
+                    $response = $handler->handle($request);
+                }
+            } else {
+                $response->getBody()->write("El moso " . json_encode($idEmpelado) . " no puede traerte ese plato porque no està en su Area</br>*Elija otro moso*");
+            }
+        } catch (Exception $e) {
+            $response = new ResponseMW();
+            $response->getBody()->write("Algo Falló: " .  json_encode($e));
+        }
+        return $response;
+    }
+    
+}
