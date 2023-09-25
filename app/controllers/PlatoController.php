@@ -9,11 +9,13 @@ class PlatoController extends Platos
         $tipo = $parametros['tipo'];
         $nombre = $parametros['nombre'];
         $precio = $parametros['precio'];
+        $timepoEstimado = $parametros['timepoEstimado'];
         
         $plato = new Platos();
         $plato->tipo = $tipo;
         $plato->nombre = $nombre;
         $plato->precio = $precio;
+        $plato->timepoEstimado = $timepoEstimado;
         $idCreado= $plato->crearPlato();
         $plato->id = $idCreado;
 

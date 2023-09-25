@@ -35,6 +35,32 @@ class ClienteController extends Cliente
         return $response
         ->withHeader('Content-Type', 'application/json');
     }
+    public function CompletarEncuesta($request, $response, $args) {
+        $parametros = $request->getParsedBody();
+        $numMesa = $parametros['numMesa'];
+        $numPedido = $parametros['numPedido'];
+        $puntuarLaMesa = $parametros['puntuarLaMesa'];
+        $puntuarLaRestaurante = $parametros['puntuarLaRestaurante'];
+        $puntuarLaMozo = $parametros['puntuarLaMozo'];
+        $puntuarLaCocinero = $parametros['puntuarLaCocinero'];
+        $experiencia = $parametros['experiencia'];
+
+        $pedido = Pedido::obtenerPedidoId($numPedido);
+        $mesa = Mesa::obtenerMesaSegunMesa($numMesa);
+
+        $mesa->puntuarLaMesa = $puntuarLaMesa;
+        $mesa->puntuarLaRestaurante = $puntuarLaRestaurante;
+        $mesa->puntuarLaMozo = $puntuarLaMozo;
+        $mesa->puntuarLaCocinero = $puntuarLaCocinero;
+        $mesa->experiencia = $experiencia;
+
+        Mesa::modificarMesa($mesa);
+
+        $payload = json_encode(array("mesa" => $mesa, "pedido" => $pedido));
+        $response->getBody()->write($payload);
+        return $response
+        ->withHeader('Content-Type', 'application/json');
+    }
 
     public function TraerTodo($request, $response, $args) {
         $clientes = Cliente::obtenerTodos();

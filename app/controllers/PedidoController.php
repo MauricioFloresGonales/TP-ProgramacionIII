@@ -24,6 +24,10 @@ class PedidoController extends Pedido
         $pedido->cantidad = $cantidad;
         $pedido->precio = (float)$plato->precio;
         $pedido->tiempo = $plato->timepoEstimado;
+
+        
+        $mesa = Mesa::obtenerMesaSegunCliente($cliente);
+        $pedido->numeroMesa = $mesa->numMesa;
         $idCreado= $pedido->crearPedido();
         $pedido->id = $idCreado;
         
@@ -35,7 +39,6 @@ class PedidoController extends Pedido
         $empleado->pedidoAsignado = $idCreado;
         Empleado::modificarEmpleado($empleado);
 
-        $mesa = Mesa::obtenerMesaSegunCliente($cliente);
         $mesa->estado = "cliente esperando pedido";
         $mesa->pedidos = $mesa->pedidos .  $pedido->nombre;
         $precioTotal = $pedido->precio * $cantidad;
@@ -52,7 +55,22 @@ class PedidoController extends Pedido
         return $response
         ->withHeader('Content-Type', 'application/json');
     }
+    public function TraerUno($request, $response, $args) {
+        $parametros = $request->getQueryParams();
+        $numMesa = $parametros['mesa'];
+        $numPedido = $parametros['pedido'];
+        $pedidos = Pedido::obtenerPedidoIdYNumMesa($numPedido, $numMesa);
 
+        $payload = json_encode($pedidos);
+        
+        if ($payload === "false") {
+            $response->getBody()->write("No se encotró ningun resultado");
+        } else {
+            $response->getBody()->write($payload);
+        }
+        return $response
+        ->withHeader('Content-Type', 'application/json');
+    }
     public function TraerTodo($request, $response, $args) {
         $pedidos = Pedido::obtenerTodos();
 
@@ -62,6 +80,17 @@ class PedidoController extends Pedido
         ->withHeader('Content-Type', 'application/json');
     }
     
+    public function TraerListaDeUnPedidoYTiempo($request, $response, $args) {
+        $parametros = $request->getQueryParams();
+        $nombre = $parametros['nombre'];
+        $pedidos = Pedido::obtenerTodosPorNombre($nombre);
+
+        $payload = json_encode($pedidos);
+        $response->getBody()->write($payload);
+        
+        return $response
+        ->withHeader('Content-Type', 'application/json');
+    }
 
     public function SacarFoto($request, $response, $args) {
         $parametros = $request->getParsedBody();
@@ -88,7 +117,7 @@ class PedidoController extends Pedido
         Mesa::modificarMesa($mesa);
         Pedido::modificarPedido($pedido);
         Empleado::modificarEmpleado($empleado);
-
+        
         $payload = json_encode(array(
             "foto" => $foto,
             "cliente" => $cliente,

@@ -7,6 +7,54 @@ require_once './models/Empleado.php';
 require_once './models/Platos.php';
 
 class EmpleadoMiddleware {
+    public function ValidarAcceso(Request $request, RequestHandler $handler) : ResponseMW 
+    {
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $esValido = false;
+    
+        try {
+            AutentificadorJWT::verificarToken($token);
+            $datos = AutentificadorJWT::ObtenerData($token);
+            $empleado = Empleado::obtenerEmpleadoSegunNombre($datos->empleado);
+
+            if (!empty($empleado)) {
+                $esValido = true;
+            }
+        } catch (Exception $e) {
+            $response = new ResponseMW();
+            $response->getBody()->write("JWV NO Valido");
+        }
+    
+        if ($esValido) {
+            $response = $handler->handle($request);
+        } else { 
+            $response = new ResponseMW();
+            $response->getBody()->write("User NO Valido");
+        }
+        
+        return $response;
+    }
+    public function ValidarSoloAdmin(Request $request, RequestHandler $handler) : ResponseMW 
+    {
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $response = new ResponseMW();
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::obtenerEmpleadoSegunNombre($data->empleado);
+
+        if (!empty($empleado)) {
+            if (strcmp($empleado->rol, 'admin') === 0) {
+                $response = $handler->handle($request);
+            } else {
+                $response->getBody()->write("Acceso no valido NO es admin");
+            }
+        } else {
+            $response->getBody()->write("No se encotró este usuario");
+        }
+        
+        return $response;
+    }
     public function EmpleadoDisponible(Request $request, RequestHandler $handler) : ResponseMW 
     {
         try {

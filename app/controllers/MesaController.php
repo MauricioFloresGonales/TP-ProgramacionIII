@@ -30,4 +30,16 @@ class MesaController extends Mesa
         return $response
         ->withHeader('Content-Type', 'application/json');
     }
+
+    public function Cerrar($request, $response, $args) {
+        $parametros = $request->getQueryParams();
+        $numMesa = $parametros['numMesa'];
+
+        $mesas = Mesa::CerrarPorNumMesa($numMesa);
+        $payload = json_encode($mesas);
+
+        $response->getBody()->write($payload);
+        return $response
+        ->withHeader('Content-Type', 'application/json');
+    }
 }

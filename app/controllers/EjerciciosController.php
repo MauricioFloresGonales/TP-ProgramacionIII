@@ -8,20 +8,16 @@ require_once './models/Archivos.php';
 class EjerciciosController extends Cliente
 {
     public function Ejer17($request, $response, $args) {
-        $candyBar = Pedido::obtenerPedidoTipoDePedido('candyBar');
-        $cocina = Pedido::obtenerPedidoTipoDePedido('cocina');
-        $choperas = Pedido::obtenerPedidoTipoDePedido('chopera');
-        $barra = Pedido::obtenerPedidoTipoDePedido('barra');
-        $contarCandyBar = !empty($candyBar) ? count($candyBar) : 0;
-        $contarCocina = !empty($cocina) ? count($cocina) : 0;
-        $contarChoperas = !empty($choperas) ? count($choperas) : 0;
-        $contarBarra = !empty($barra) ? count($barra) : 0;
+        $candyBar = Pedido::obtenerCantPedidosPorTipoDePedido('candyBar');
+        $cocina = Pedido::obtenerCantPedidosPorTipoDePedido('cocina');
+        $choperas = Pedido::obtenerCantPedidosPorTipoDePedido('chopera');
+        $barra = Pedido::obtenerCantPedidosPorTipoDePedido('barra');
         $payload = json_encode(
             array(
-            "candyBar" => $contarCandyBar, 
-            "cocina" => $contarCocina, 
-            "choperas" => $contarChoperas, 
-            "barra" => $contarBarra
+            "candyBar" => $candyBar, 
+            "cocina" => $cocina, 
+            "choperas" => $choperas, 
+            "barra" => $barra
         ));
         $response->getBody()->write($payload);
         return $response
@@ -29,24 +25,20 @@ class EjerciciosController extends Cliente
     }
 
     public function Ejer18($request, $response, $args) {
-        $candyBar = Pedido::obtenerPedidoTipoDePedido('candyBar');
-        $cocina = Pedido::obtenerPedidoTipoDePedido('cocina');
-        $choperas = Pedido::obtenerPedidoTipoDePedido('chopera');
-        $barra = Pedido::obtenerPedidoTipoDePedido('barra');
-        $objetosCandyBar = !empty($candyBar) ? $candyBar : 0;
-        $objetosCocina = !empty($cocina) ? $cocina : 0;
-        $objetosChoperas = !empty($choperas) ? $choperas : 0;
-        $objetosBarra = !empty($barra) ? $barra : 0;
+        $candyBar = Pedido::obtenerCantPedidosPorTipoDePedido('candyBar');
+        $cocina = Pedido::obtenerCantPedidosPorTipoDePedido('cocina');
+        $choperas = Pedido::obtenerCantPedidosPorTipoDePedido('chopera');
+        $barra = Pedido::obtenerCantPedidosPorTipoDePedido('barra');
 
         $bartender = Empleado::obtenerEmpleadoRol('bartender');
         $cervecero = Empleado::obtenerEmpleadoRol('cervecero');
         $mozo = Empleado::obtenerEmpleadoRol('mozo');
         $cocinero = Empleado::obtenerEmpleadoRol('cocinero');
 
-        $sectorCandyBar = array("empleados" => $mozo, "pedidos" => $objetosCandyBar);
-        $sectorBarra = array("empleados" => $bartender, "pedidos" => $objetosBarra);
-        $sectorChopera = array("empleados" => $cervecero, "pedidos" => $objetosChoperas);
-        $sectorCocina = array("empleados" => $cocinero, "pedidos" => $objetosCocina);
+        $sectorCandyBar = array("empleados" => $mozo, "pedidos" => $candyBar);
+        $sectorBarra = array("empleados" => $bartender, "pedidos" => $barra);
+        $sectorChopera = array("empleados" => $cervecero, "pedidos" => $choperas);
+        $sectorCocina = array("empleados" => $cocinero, "pedidos" => $cocina);
 
         $payload = json_encode(
             array(

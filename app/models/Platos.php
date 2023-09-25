@@ -15,6 +15,7 @@ class Platos
         $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
         $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':precio', $this->precio, PDO::PARAM_STR);
+        $consulta->bindValue(':timepoEstimado', $this->timepoEstimado, PDO::PARAM_INT);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();

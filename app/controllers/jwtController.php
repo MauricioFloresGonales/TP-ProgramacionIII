@@ -6,11 +6,9 @@ class jwtController {
     public static function crearToken(Request $request, Response $response) {    
         $parametros = $request->getParsedBody();
     
-        $usuario = $parametros['mail'];
-        $tipo = $parametros['tipo'];
-        $perfil = $parametros['perfil'];
+        $empleado = $parametros['empleado'];
     
-        $datos = array('usuario' => $usuario, 'tipo' => $tipo, 'perfil' => $perfil);
+        $datos = array('empleado' => $empleado);
     
         $token = AutentificadorJWT::CrearToken($datos);
         $payload = json_encode(array('jwt' => $token));

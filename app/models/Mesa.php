@@ -142,7 +142,30 @@ class Mesa
                 puntuarLaCocinero, 
                 experiencia
             FROM mesas 
-            WHERE estado = vacia");
+            WHERE estado = 'vacia'");
+        $consulta->execute();
+
+        return $consulta->fetchObject('Mesa');
+    }
+    public static function obtenerPorEstado($estado) {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta(
+            "SELECT
+                id,
+                numMesa,
+                cliente, 
+                pedidos, 
+                estado,
+                totalDeLaCuenta,
+                foto,
+                puntuarLaMesa, 
+                puntuarLaRestaurante, 
+                puntuarLaMozo, 
+                puntuarLaCocinero, 
+                experiencia
+            FROM mesas 
+            WHERE estado = :estado");
+        $consulta->bindValue(':estado', $estado, PDO::PARAM_STR);
         $consulta->execute();
 
         return $consulta->fetchObject('Mesa');
@@ -213,6 +236,28 @@ class Mesa
         $consulta->bindValue(':experiencia', $dataMesa->experiencia, PDO::PARAM_STR);
         $consulta->bindValue(':id', $dataMesa->id, PDO::PARAM_INT);
         $consulta->execute();
+    }
+
+    public static function CerrarPorNumMesa($numMesa) {
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta(
+            "UPDATE mesas 
+            SET
+                cliente = null, 
+                pedidos = null, 
+                estado = 'cerrada',
+                totalDeLaCuenta = 0,
+                foto = null,
+                puntuarLaMesa = null, 
+                puntuarLaRestaurante = null, 
+                puntuarLaMozo = null, 
+                puntuarLaCocinero = null, 
+                experiencia = null
+            WHERE numMesa = :numMesa");
+        $consulta->bindValue(':numMesa', $numMesa, PDO::PARAM_INT);
+        $consulta->execute();
+
+        return Mesa::obtenerMesaSegunMesa($numMesa);
     }
 
     public static function borrarMesa($id) {
