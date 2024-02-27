@@ -10,7 +10,7 @@ class MesaMiddleware {
         try {
             $mesas = Mesa::obtenerMesasVacias();
             $response = new ResponseMW();
-            if (!empty($mesas)) {
+            if (!empty($mesas) && $mesas!== false && $mesas!== []) {
                 $response = $handler->handle($request);
             } else {
                 $response->getBody()->write("No hay mesas Vacias disponibles");
@@ -21,7 +21,6 @@ class MesaMiddleware {
         }
         return $response;
     }
-
     public function MesaExistente(Request $request, RequestHandler $handler) : ResponseMW 
     {
         try {
@@ -30,7 +29,7 @@ class MesaMiddleware {
             $mesa = Mesa::obtenerMesaSegunMesa($numMesa);
             $response = new ResponseMW();
 
-            if (!empty($mesa)) {
+            if (!empty($mesa) && $mesa!== false && $mesa!== []) {
                 $response = $handler->handle($request);
             } else {
                 $response->getBody()->write("No se encontró la mesa numero: " . json_encode($numMesa));
@@ -49,12 +48,12 @@ class MesaMiddleware {
             $mesa = Mesa::obtenerMesaSegunMesa($numMesa);
             $response = new ResponseMW();
 
-            if (!empty($mesa)) {
+            if (!empty($mesa) && $mesa!== false && $mesa!== []) {
                 if (strcmp($mesa->estado, "vacia") === 0) {
                     $response = $handler->handle($request);
                 }
-            } else {
                 $response->getBody()->write("La mesa numero " . json_encode($numMesa) . " no se encuetra libre");
+            } else {
             }
         } catch (Exception $e) {
             $response = new ResponseMW();
@@ -62,7 +61,25 @@ class MesaMiddleware {
         }
         return $response;
     }
+    public function ValidarQueLaMesaExistaSegunNumero(Request $request, RequestHandler $handler) : ResponseMW 
+    {
+        try {
+            $parametros = $request->getQueryParams();
+            $numMesa = $parametros['numMesa'];
+            $mesa = Mesa::obtenerMesaSegunMesa($numMesa);
+            $response = new ResponseMW();
 
+            if (!empty($mesa)) {
+                $response = $handler->handle($request);
+            } else {
+                $response->getBody()->write("No se encontró la mesa numero: " . json_encode($numMesa));
+            }
+        } catch (Exception $e) {
+            $response = new ResponseMW();
+            $response->getBody()->write("Algo Falló: " .  json_encode($e));
+        }
+        return $response;
+    }
     public function MesasParaAtender(Request $request, RequestHandler $handler) : ResponseMW 
     {
         try {

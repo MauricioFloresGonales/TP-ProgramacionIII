@@ -17,6 +17,7 @@ require_once './middlewares/AutentificadorJWT.php';
 require_once './middlewares/MesaMiddleware.php';
 require_once './middlewares/PedidosMiddleware.php';
 require_once './middlewares/EmpleadoMiddleware.php';
+require_once './middlewares/ClientesMiddleware.php';
 
 require_once './controllers/jwtController.php';
 require_once './controllers/ClienteController.php';
@@ -25,6 +26,7 @@ require_once './controllers/MesaController.php';
 require_once './controllers/PedidoController.php';
 require_once './controllers/PlatoController.php';
 require_once './controllers/EjerciciosController.php';
+require_once './controllers/EncuestaController.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
@@ -44,8 +46,7 @@ $app->group('/cliente', function (RouteCollectorProxy $group) {
 });
 
 $app->group('/empleado', function (RouteCollectorProxy $group) {
-    $group->post('/login', \EmpleadoController::class . ':Login')
-    ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->post('/login', \EmpleadoController::class . ':Login');
     $group->get('[/]', \EmpleadoController::class . ':TraerTodo');
     $group->post('[/]', \EmpleadoController::class . ':CargarUno');
 });
@@ -56,14 +57,7 @@ $app->group('/mesa', function (RouteCollectorProxy $group) {
 });
 
 $app->group('/pedido', function (RouteCollectorProxy $group) {
-    $group->post('/sacarFoto', \PedidoController::class . ':SacarFoto');
     $group->get('[/]', \PedidoController::class . ':TraerTodo');
-    $group->post('[/]', \PedidoController::class . ':CargarUno')
-     ->add(\EmpleadoMiddleware::class . ':EmpleadoEsDelTipoDePedido')
-     ->add(\PedidosMiddleware::class . ':ExisteElPlato')
-     ->add(\MesaMiddleware::class . ':MesaNecesitaAtencion')
-     ->add(\MesaMiddleware::class . ':MesasParaAtender')
-     ->add(\EmpleadoMiddleware::class . ':EmpleadoDisponible');
 });
 
 $app->group('/plato', function (RouteCollectorProxy $group) {
@@ -71,33 +65,54 @@ $app->group('/plato', function (RouteCollectorProxy $group) {
     $group->post('[/]', \PlatoController::class . ':CargarUno');
 });
 
-$app->group('/ejercicios', function (RouteCollectorProxy $group) {
-    $group->post('/1', \PedidoController::class . ':CargarUno')
-    ->add(\EmpleadoMiddleware::class . ':EmpleadoEsDelTipoDePedido')
-    ->add(\PedidosMiddleware::class . ':ExisteElPlato')
-    ->add(\MesaMiddleware::class . ':MesaNecesitaAtencion')
-    ->add(\MesaMiddleware::class . ':MesasParaAtender')
-    ->add(\EmpleadoMiddleware::class . ':EmpleadoDisponible');
-    $group->post('/2', \PedidoController::class . ':SacarFoto');
-    $group->get('/3', \EmpleadoController::class . ':TraerTodo');//
-    $group->get('/4', \PedidoController::class . ':TraerUno');
-    $group->get('/5', \PedidoController::class . ':TraerListaDeUnPedidoYTiempo');
-    $group->get('/6', \EmpleadoController::class . ':ListarPendiestesYServir');
-    $group->get('/7', \EmpleadoController::class . ':CambiaEstadoAMesas');
-    $group->get('/8', \MesaController::class . ':TraerTodo');
-    $group->get('/9', \EmpleadoController::class . ':PedirCuenta');
-    $group->get('/10', \MesaController::class . ':Cerrar');
-    $group->post('/11', \ClienteController::class . ':CompletarEncuesta');
-    //$group->get('/12', \PedidoController::class . ':TraerListaDeUnPedidoYTiempo');
-    //$group->get('/12', \PedidoController::class . ':TraerListaDeUnPedidoYTiempo');
-    //$group->get('/14', \PedidoController::class . ':TraerListaDeUnPedidoYTiempo');
-    //$group->get('/15', \PedidoController::class . ':TraerListaDeUnPedidoYTiempo');
-    //$group->get('/16', \PedidoController::class . ':TraerListaDeUnPedidoYTiempo');
-    $group->get('/17', \EjerciciosController::class . ':Ejer17');
-    $group->get('/18', \EjerciciosController::class . ':Ejer18');
-    $group->get('/19', \EjerciciosController::class . ':Ejer19');
-    $group->get('/21', \EjerciciosController::class . ':Ejer21');
-    $group->get('/22', \EjerciciosController::class . ':Ejer22');
+$app->group('/ejerciciosNew', function (RouteCollectorProxy $group) {
+    $group->post('/1', \PedidoController::class . ':TomarPedido')
+        ->add(\PedidosMiddleware::class . ':ExisteElPlato')
+        ->add(\EmpleadoMiddleware::class . ':ValidarSoloMoso');
+    $group->post('/2', \PedidoController::class . ':SacarFoto')
+        ->add(\EmpleadoMiddleware::class . ':ValidarSoloMoso');
+    $group->get('/3', \PedidoController::class . ':TraerTodoSegunTipoDePedidoYEstado')
+        ->add(\PedidosMiddleware::class . ':ValidarQueElUnicoEstadoSeaEnPreparacion')
+        ->add(\EmpleadoMiddleware::class . ':ValidarQueSeaDelMismoSectorQueSeQuiereModificar');
+    $group->get('/4', \MesaController::class . ':MostrarTiempoDelPedido')
+        ->add(\PedidosMiddleware::class . ':ExisteElPlatoPorId');
+    $group->get('/5', \PedidoController::class . ':TraerListaDeUnPedidoYTiempo')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->get('/6', \EmpleadoController::class . ':ListarPendiestesYServir')
+        ->add(\EmpleadoMiddleware::class . ':ValidarQueSeaDelMismoRolQueSeQuiereModificar');
+    $group->get('/7', \EmpleadoController::class . ':CambiaEstadoAMesas')
+        ->add(\EmpleadoMiddleware::class . ':ValidarSoloMoso');
+    $group->get('/8', \MesaController::class . ':TraerTodo')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->get('/9', \EmpleadoController::class . ':PedirCuenta')
+        ->add(\EmpleadoMiddleware::class . ':ValidarSoloMoso');
+    $group->get('/10', \MesaController::class . ':Cerrar')
+        ->add(\MesaMiddleware::class . ':ValidarQueLaMesaExistaSegunNumero')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->post('/11', \ClienteController::class . ':CompletarEncuesta')
+        ->add(\ClientesMiddleware::class . ':ClienteExiste');
+    $group->get('/12', \EncuestaController::class . ':OrdenarComenarios')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->get('/13', \EncuestaController::class . ':MesaMasUsada')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->get('/14', \EjerciciosController::class . ':Ejer14')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->get('/15', \EjerciciosController::class . ':Ejer15')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->get('/16', \EjerciciosController::class . ':Ejer16')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->get('/17', \EjerciciosController::class . ':Ejer17')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->get('/18', \EjerciciosController::class . ':Ejer18')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->get('/19', \EjerciciosController::class . ':Ejer19')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->get('/20', \EjerciciosController::class . ':Ejer20')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->get('/21', \EjerciciosController::class . ':Ejer21')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
+    $group->get('/22', \EjerciciosController::class . ':Ejer22')
+        ->add(\EmpleadoMiddleware::class . ':ValidarAcceso');
 });
 
 $app->group('/jwt', function (RouteCollectorProxy $group) {
@@ -107,7 +122,7 @@ $app->group('/jwt', function (RouteCollectorProxy $group) {
     $group->get('/verificarToken', \jwtController::class . ':verificarToken');
 });
 $app->get('[/]', function (Request $request, Response $response) {
-    $payload = json_encode(array("mensaje" => "Slim Framework 4 PHP - TP"));
+    $payload = json_encode(array("mensaje" => "Slim Framework 4 PHP - TP Mauricio Gonzales Flores"));
     $response->getBody()->write($payload);
     return $response->withHeader('Content-Type', 'application/json');
 });

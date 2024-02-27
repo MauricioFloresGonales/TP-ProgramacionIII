@@ -35,7 +35,7 @@ class Platos
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->execute();
 
-        return $consulta->fetchObject('Platps');
+        return $consulta->fetchObject('Platos');
     }
     public static function obtenerPlatoNombre($nombre)
     {

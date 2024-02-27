@@ -1,9 +1,9 @@
 
 platos
-    - barra: de tragos y vinos (en la entrada)
-    - barra de choperas: cerveza artesanal; (en el patio trasero)
-    - la cocina: platos de comida;
-    - Candy Bar: postres artesanales.   
+    - barra: de tragos y vinos (en la entrada)                      "barra"
+    - barra de choperas: cerveza artesanal; (en el patio trasero)   "chopera"
+    - la cocina: platos de comida;                                  "cocina"
+    - Candy Bar: postres artesanales.                               "candyBar"
     - precio
     - timepoEstimado
 
@@ -19,22 +19,31 @@ cliente:
     - relacion con el pedido: codigo alfanumerico del pedido
     - mesa
 
-Empleado: 
+Empleado:
     - id
-    - rol : bartender/cerveceros/cocineros/mozos
-    - nombrePedido
-    - cantidad
+    - nombre
+    - rol: bartender/cerveceros/cocineros/mozos
     - estado: “listo para servir” / "atendiendo" / desocupado
     - pedidoAsignado
     - ultimaSesion
     - contrato: nuevo / suspendido / borrardos
+    - contraseña
+    - token
+
+Cuenta:
+    - id
+    - numMesa
+    - moso
+    - idPedidos
+    - totalAPagar
+    - foto
 
 Pedido: 
     - id
     - nombre
     - tipoDePedido
     - precio
-    - estado: “en preparación”/ "entregado" / "cancelado" / "fuera de tiempo"
+    - estado: “en preparación”/ "listo para servir"/"entregado" / "cancelado" / "fuera de tiempo" (NUEVO) "nuevo"
     - tiempo estimado
     - moso
     - cliente
@@ -53,8 +62,16 @@ Mesa:
         - “cerrada”
     - totalDeLaCuenta
     - foto
+
+Encuesta:
+    - id
+    - numMesa
+    - cliente
+    - pedidos
+    - totalDeLaCuenta
     - puntuarLaMesa
     - puntuarLaRestaurante
     - puntuarLaMozo
     - puntuarLaCocinero
-    - Experiencia
+    - experiencia
+    - fecha

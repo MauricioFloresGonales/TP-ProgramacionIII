@@ -1,6 +1,6 @@
 <?php
 require_once './models/Cliente.php';
-require_once './models/Mesa.php';
+require_once './models/Encuesta.php';
 
 class ClienteController extends Cliente
 {
@@ -12,6 +12,7 @@ class ClienteController extends Cliente
         $cliente = new Cliente();
         $cliente->nombre = $nombre;
         $cliente->mesa = $mesa;
+        //DB
         $idClienteCreado = $cliente->crearCliente();
         $cliente->id = $idClienteCreado;
 
@@ -22,12 +23,8 @@ class ClienteController extends Cliente
         $mesa->pedidos = null;
         $mesa->totalDeLaCuenta = 0;
         $mesa->foto = null;
-        $mesa->puntuarLaMesa = null;
-        $mesa->puntuarLaRestaurante = null;
-        $mesa->puntuarLaMozo = null;
-        $mesa->puntuarLaCocinero = null;
-        $mesa->experiencia = null;
         
+        //DB
         Mesa::modificarMesa($mesa);
 
         $payload = json_encode(array("cliente" => $cliente, "mesaAsignada" => $mesa));
@@ -37,26 +34,32 @@ class ClienteController extends Cliente
     }
     public function CompletarEncuesta($request, $response, $args) {
         $parametros = $request->getParsedBody();
-        $numMesa = $parametros['numMesa'];
-        $numPedido = $parametros['numPedido'];
+        $idCliente = $parametros['cliente'];
         $puntuarLaMesa = $parametros['puntuarLaMesa'];
-        $puntuarLaRestaurante = $parametros['puntuarLaRestaurante'];
+        $puntuarElRestaurante = $parametros['puntuarElRestaurante'];
         $puntuarLaMozo = $parametros['puntuarLaMozo'];
         $puntuarLaCocinero = $parametros['puntuarLaCocinero'];
         $experiencia = $parametros['experiencia'];
 
-        $pedido = Pedido::obtenerPedidoId($numPedido);
-        $mesa = Mesa::obtenerMesaSegunMesa($numMesa);
+        $cliente = Cliente::obtenerClienteId($idCliente);
+        $cuenta = Cuenta::obtenerCuentaId($cliente->relacionPedido);
 
-        $mesa->puntuarLaMesa = $puntuarLaMesa;
-        $mesa->puntuarLaRestaurante = $puntuarLaRestaurante;
-        $mesa->puntuarLaMozo = $puntuarLaMozo;
-        $mesa->puntuarLaCocinero = $puntuarLaCocinero;
-        $mesa->experiencia = $experiencia;
+        $encuesta = new Encuesta();
+        $encuesta->numMesa = (int)$cliente->mesa;
+        $encuesta->cliente = $idCliente;
+        $encuesta->pedidos = $cliente->pedidosPendientes;
+        $encuesta->totalDeLaCuenta = $cuenta->totalAPagar;
+        $encuesta->puntuarLaMesa = (int)$puntuarLaMesa;
+        $encuesta->puntuarElRestaurante = (int)$puntuarElRestaurante;
+        $encuesta->puntuarLaMozo = (int)$puntuarLaMozo;
+        $encuesta->puntuarLaCocinero = (int)$puntuarLaCocinero;
+        $encuesta->experiencia = $experiencia;
+        $encuesta->fecha = date("Y-m-d");
+        
+        //DB
+        $encuesta->crearEncuesta();
 
-        Mesa::modificarMesa($mesa);
-
-        $payload = json_encode(array("mesa" => $mesa, "pedido" => $pedido));
+        $payload = json_encode(array("Encuesta" => $encuesta));
         $response->getBody()->write($payload);
         return $response
         ->withHeader('Content-Type', 'application/json');

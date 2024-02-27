@@ -8,12 +8,14 @@ class ClientesMiddleware {
     public function ClienteExiste(Request $request, RequestHandler $handler) : ResponseMW 
     {
         try {
-            $mesas = Mesa::obtenerMesasVacias();
+            $parametros = $request->getParsedBody();
+            $idCliente = $parametros['cliente'];
+            $cliente = Cliente::obtenerClienteId($idCliente);
             $response = new ResponseMW();
-            if (!empty($mesas)) {
+            if (!empty($cliente) && $cliente !== false && $cliente !== []) {
                 $response = $handler->handle($request);
             } else {
-                $response->getBody()->write("No hay mesas Vacias disponibles");
+                $response->getBody()->write("El Cliente NO existe - corregir los parametros del Body");
             }
         } catch (Exception $e) {
             $response = new ResponseMW();
@@ -21,5 +23,4 @@ class ClientesMiddleware {
         }
         return $response;
     }
-    
 }

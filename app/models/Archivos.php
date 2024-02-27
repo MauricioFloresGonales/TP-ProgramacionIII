@@ -53,4 +53,18 @@ class Archivos {
         move_uploaded_file($_FILES["foto"]["tmp_name"], $destino);
     }
 
+    public static function SubirPDFDelLogo() {
+
+        $carpetaDestino = 'Ejercicio16-Logo/';
+        $nombreArchivo = 'Logo' . date("H-i-s") . '.pdf';
+
+        if (!file_exists($carpetaDestino)) {
+            mkdir($carpetaDestino, 0777, true);
+        }
+        if (copy('../recursos/LogoDeLaEmpresa.pdf', $carpetaDestino . $nombreArchivo)) {
+            echo 'El PDF se ha guardado exitosamente a ' . $carpetaDestino;
+        } else {
+            echo 'Hubo un error al guardar el PDF.';
+        }
+    }
 }

@@ -11,8 +11,6 @@ class Pedido
     public $tiempo;
     public $moso;
     public $cliente;
-    public $numeroMesa;
-    public $fotoMesa;
 
     public function crearPedido()
     {
@@ -26,8 +24,7 @@ class Pedido
                 estado, 
                 tiempo, 
                 moso,
-                cliente,
-                numeroMesa) 
+                cliente) 
             VALUES (
                 :nombre,
                 :tipoDePedido,
@@ -36,8 +33,7 @@ class Pedido
                 :estado,
                 :tiempo,
                 :moso,
-                :cliente,
-                :numeroMesa)");
+                :cliente)");
         $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':tipoDePedido', $this->tipoDePedido, PDO::PARAM_STR);
         $consulta->bindValue(':cantidad', $this->cantidad, PDO::PARAM_STR);
@@ -46,7 +42,6 @@ class Pedido
         $consulta->bindValue(':tiempo', $this->tiempo, PDO::PARAM_STR);
         $consulta->bindValue(':moso', $this->moso, PDO::PARAM_STR);
         $consulta->bindValue(':cliente', $this->cliente, PDO::PARAM_INT);
-        $consulta->bindValue(':numeroMesa', $this->numeroMesa, PDO::PARAM_INT);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();
@@ -64,9 +59,7 @@ class Pedido
                 estado, 
                 tiempo, 
                 moso,
-                cliente,
-                numeroMesa,
-                fotoMesa 
+                cliente
             FROM pedidos");
         $consulta->execute();
 
@@ -97,15 +90,13 @@ class Pedido
                 estado, 
                 tiempo, 
                 moso,
-                cliente,
-                numeroMesa,
-                fotoMesa
+                cliente
             FROM pedidos
             WHERE id = :id");
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->execute();
 
-        return $consulta->fetchObject('Pedido');
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
     }
     public static function obtenerPorEstado($estado)
     {
@@ -120,17 +111,15 @@ class Pedido
                 estado, 
                 tiempo, 
                 moso,
-                cliente,
-                numeroMesa,
-                fotoMesa
+                cliente
             FROM pedidos
             WHERE estado = :estado");
         $consulta->bindValue(':estado', $estado, PDO::PARAM_INT);
         $consulta->execute();
 
-        return $consulta->fetchObject('Pedido');
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
     }
-    public static function obtenerPedidoIdYNumMesa($id, $numMesa)
+    public static function obtenerPorTipoYEstado($tipoDePedido, $estado)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta(
@@ -143,16 +132,15 @@ class Pedido
                 estado, 
                 tiempo, 
                 moso,
-                cliente,
-                numeroMesa,
-                fotoMesa
+                cliente
             FROM pedidos
-            WHERE id = :id AND numeroMesa = :numMesa");
-        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
-        $consulta->bindValue(':numMesa', $numMesa, PDO::PARAM_INT);
+            WHERE tipoDePedido = :tipoDePedido
+            AND estado = :estado");
+        $consulta->bindValue(':tipoDePedido', $tipoDePedido, PDO::PARAM_STR);
+        $consulta->bindValue(':estado', $estado, PDO::PARAM_STR);
         $consulta->execute();
 
-        return $consulta->fetchObject('Pedido');
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
     }
     public static function obtenerPedidoMoso($moso)
     {
@@ -167,9 +155,7 @@ class Pedido
             estado,  
             tiempo, 
             moso,
-            cliente,
-            numeroMesa,
-            fotoMesa 
+            cliente
             FROM pedidos 
             WHERE moso = :moso");
         $consulta->bindValue(':moso', $moso, PDO::PARAM_STR);
@@ -191,9 +177,7 @@ class Pedido
             estado,  
             tiempo, 
             moso,
-            cliente,
-            numeroMesa,
-            fotoMesa 
+            cliente
             FROM pedidos 
             WHERE tipoDePedido = :tipoDePedido");
         $consulta->bindValue(':tipoDePedido', $tipoDePedido, PDO::PARAM_STR);
@@ -214,9 +198,7 @@ class Pedido
             estado,  
             tiempo, 
             moso,
-            cliente,
-            numeroMesa,
-            fotoMesa 
+            cliente
             FROM pedidos 
             WHERE tipoDePedido = :tipoDePedido");
         $consulta->bindValue(':tipoDePedido', $tipoDePedido, PDO::PARAM_STR);
@@ -252,21 +234,17 @@ class Pedido
                 precio = :precio,
                 estado = :estado, 
                 tiempo = :tiempo, 
-                moso = :moso, 
-                cliente = :cliente,
-                numeroMesa = :numeroMesa,
-                fotoMesa = :fotoMesa 
+                moso = :moso,
+                cliente = :cliente
             WHERE id = :id");
         $consulta->bindValue(':nombre', $dataUsuario->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':tipoDePedido', $dataUsuario->tipoDePedido, PDO::PARAM_STR);
-        $consulta->bindValue(':cantidad', $dataUsuario->cantidad, PDO::PARAM_STR);
+        $consulta->bindValue(':cantidad', $dataUsuario->cantidad, PDO::PARAM_INT);
         $consulta->bindValue(':precio', $dataUsuario->precio, PDO::PARAM_STR);
         $consulta->bindValue(':estado', $dataUsuario->estado, PDO::PARAM_STR);
         $consulta->bindValue(':tiempo', $dataUsuario->tiempo, PDO::PARAM_STR);
         $consulta->bindValue(':moso', $dataUsuario->moso, PDO::PARAM_STR);
         $consulta->bindValue(':cliente', $dataUsuario->cliente, PDO::PARAM_INT);
-        $consulta->bindValue(':numeroMesa', $dataUsuario->numeroMesa, PDO::PARAM_INT);
-        $consulta->bindValue(':fotoMesa', $dataUsuario->fotoMesa, PDO::PARAM_STR);
         $consulta->bindValue(':id', $dataUsuario->id, PDO::PARAM_INT);
         $consulta->execute();
     }
@@ -277,5 +255,24 @@ class Pedido
         $consulta = $objAccesoDato->prepararConsulta("DELETE FROM pedidos WHERE id = :id");
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->execute();
+    }
+
+    public static function CrearNewPedido($nombre, $idEmpleado, $cliente, $cantidad) {
+        $newPedido = new Pedido();
+        $newPedido->nombre = $nombre;
+        $newPedido->moso = $idEmpleado;
+        $newPedido->cliente = $cliente;
+        $newPedido->estado = "nuevo";
+
+        $plato =  Platos::obtenerPlatoNombre($nombre);
+        $newPedido->tipoDePedido = $plato->tipo;
+        $newPedido->cantidad = (int)$cantidad;
+        $newPedido->precio = (float)$plato->precio * (int)$cantidad;
+        $newPedido->tiempo = $plato->timepoEstimado;
+        
+        //DB
+        $idCreado= $newPedido->crearPedido();
+        $newPedido->id = $idCreado;
+        return $newPedido;
     }
 }

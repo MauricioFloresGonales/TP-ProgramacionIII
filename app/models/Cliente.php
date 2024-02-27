@@ -52,7 +52,15 @@ class Cliente
     public static function modificarCliente($dataUsuario)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE clientes SET nombre = :nombre, pedidosPendientes = :pedidosPendientes, foto = :foto, relacionPedido = :relacionPedido, mesa = :mesa WHERE id = :id");
+        $consulta = $objAccesoDato->prepararConsulta(
+            "UPDATE clientes 
+            SET 
+                nombre = :nombre,
+                pedidosPendientes = :pedidosPendientes,
+                foto = :foto,
+                relacionPedido = :relacionPedido,
+                mesa = :mesa
+            WHERE id = :id");
         $consulta->bindValue(':nombre', $dataUsuario->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':pedidosPendientes', $dataUsuario->pedidosPendientes, PDO::PARAM_STR);
         $consulta->bindValue(':foto', $dataUsuario->foto, PDO::PARAM_STR);

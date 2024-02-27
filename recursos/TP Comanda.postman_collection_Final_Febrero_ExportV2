@@ -1,0 +1,1300 @@
+{
+	"info": {
+		"_postman_id": "e0a9abf7-5ea1-4848-80b4-40b573d55454",
+		"name": "TP Comanda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10681478"
+	},
+	"item": [
+		{
+			"name": "JWT",
+			"item": [
+				{
+					"name": "POST - Creart Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "empleado",
+									"value": "EJuan",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/jwt/crearToken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"jwt",
+								"crearToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Devolver Payload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4OTcwNTYsImV4cCI6MTY4Nzk1NzA1NiwiYXVkIjoiMTBkM2I3YmNkNDZhZGMzMDIyZjJiOWZjZTg4YjAxNzNlNDdjY2JjMCIsImRhdGEiOnsidXN1YXJpbyI6InBlZHJvIiwidGlwbyI6InZlbmRlZG9yIiwicGVyZmlsIjoiYWRtaW4ifSwiYXBwIjoiVGVzdCBKV1QifQ.zIeYRNAdojaRdzwgfSO3V0voup-h17R-It7d0VTdNA0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Slim/ParcialDos/app/jwt/devolverPayLoad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Slim",
+								"ParcialDos",
+								"app",
+								"jwt",
+								"devolverPayLoad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Devolver Datos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODkxMTMxNjcsImV4cCI6MTY4OTE3MzE2NywiYXVkIjoiMTBkM2I3YmNkNDZhZGMzMDIyZjJiOWZjZTg4YjAxNzNlNDdjY2JjMCIsImRhdGEiOnsiZW1wbGVhZG8iOiJqdWFuIn0sImFwcCI6IlRlc3QgSldUIn0.eKLGL6EnQ4b2XsfnKEZ69SjcbnqTHdfKPYX3Vv0ABdQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Slim/ParcialDos/app/jwt/devolverDatos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Slim",
+								"ParcialDos",
+								"app",
+								"jwt",
+								"devolverDatos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Verificar Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4OTcwNTYsImV4cCI6MTY4Nzk1NzA1NiwiYXVkIjoiMTBkM2I3YmNkNDZhZGMzMDIyZjJiOWZjZTg4YjAxNzNlNDdjY2JjMCIsImRhdGEiOnsidXN1YXJpbyI6InBlZHJvIiwidGlwbyI6InZlbmRlZG9yIiwicGVyZmlsIjoiYWRtaW4ifSwiYXBwIjoiVGVzdCBKV1QifQ.zIeYRNAdojaRdzwgfSO3V0voup-h17R-It7d0VTdNA0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Slim/ParcialDos/app/jwt/verificarToken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Slim",
+								"ParcialDos",
+								"app",
+								"jwt",
+								"verificarToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "GET - Todos los usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - CargarUno",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "julian",
+									"type": "text"
+								},
+								{
+									"key": "mesa",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Empleados",
+			"item": [
+				{
+					"name": "GET - Todos los Empleados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/empleado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"empleado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Crear Uno",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "ERoberto",
+									"type": "text"
+								},
+								{
+									"key": "rol",
+									"value": "mozo",
+									"description": "bartender/cervecero/cocinero/mozo",
+									"type": "text"
+								},
+								{
+									"key": "contrato",
+									"value": "nuevo",
+									"description": "nuevo / suspendido / borrardos",
+									"type": "text"
+								},
+								{
+									"key": "contrasenia",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/empleado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"empleado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "empleado",
+									"value": "EJose",
+									"description": "admin: juan - mozo: EJose - cervecero: ERamiro",
+									"type": "text"
+								},
+								{
+									"key": "contraseña",
+									"value": "1234",
+									"description": "admin: admin1 - mozo: 1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/empleado/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"empleado",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mesas",
+			"item": [
+				{
+					"name": "GET - Todos las Mesas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/mesa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"mesa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Crear Uno",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "numMesa",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/mesa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"mesa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cerrar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/mesa/cerrar?numMesa=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"mesa",
+								"cerrar"
+							],
+							"query": [
+								{
+									"key": "numMesa",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedido",
+			"item": [
+				{
+					"name": "GET - Todos los Pedidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/pedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"pedido"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Plato",
+			"item": [
+				{
+					"name": "GET - Todos los Platos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/plato",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"plato"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Crear Uno",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "tipo",
+									"value": "cocina",
+									"description": "barra / chopera / cocina / candyBar",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "milanesa a caballo",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "380",
+									"type": "text"
+								},
+								{
+									"key": "timepoEstimado",
+									"value": "8",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/plato",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"plato"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "EjerciciosNew",
+			"item": [
+				{
+					"name": "1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNDUyNzIsImV4cCI6MTcwOTEwNTI3MiwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFSm9zZSIsImFwcCI6IlRlc3QgSldUIn0.1O5k3WT5penSBA-9x99nYvC_-pgCRDs0EUiVSEkgOTk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mososPedidos\": {\r\n        \"cliente\": 20,\r\n        \"moso\": 2,\r\n        \"pedidos\": [\r\n            {\r\n                \"nombre\": \"milanesa a caballo\",\r\n                \"cantidad\": 1\r\n            }, {\r\n                \"nombre\": \"hamburguesa de garbanzo\",\r\n                \"cantidad\": 2\r\n            }, {\r\n                \"nombre\": \"corona\",\r\n                \"cantidad\": 1\r\n            }, {\r\n                \"nombre\": \"daikiri\",\r\n                \"cantidad\": 1\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNDUyNzIsImV4cCI6MTcwOTEwNTI3MiwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFSm9zZSIsImFwcCI6IlRlc3QgSldUIn0.1O5k3WT5penSBA-9x99nYvC_-pgCRDs0EUiVSEkgOTk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cliente",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "moso",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/C:/Users/Pipoca/Pictures/Screenshots/Hyperscape 2020.07.12 - 21.27.18.22.DVR_Moment.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNDcwOTAsImV4cCI6MTcwOTEwNzA5MCwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFUmFtaXJvIiwiYXBwIjoiVGVzdCBKV1QifQ.eWxIsAAMi76ma4_XQXuqYW7n_TRWTMqUjR8hv483VR8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/3?tipo=chopera&estado=nuevo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"3"
+							],
+							"query": [
+								{
+									"key": "tipo",
+									"value": "chopera",
+									"description": "cocina, candyBar, barra, chopera"
+								},
+								{
+									"key": "estado",
+									"value": "nuevo",
+									"description": "nuevo, \"en preparacion\""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/4?mesa=2&numPedido=177",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"4"
+							],
+							"query": [
+								{
+									"key": "mesa",
+									"value": "2"
+								},
+								{
+									"key": "numPedido",
+									"value": "177"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNDcwOTAsImV4cCI6MTcwOTEwNzA5MCwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFUmFtaXJvIiwiYXBwIjoiVGVzdCBKV1QifQ.eWxIsAAMi76ma4_XQXuqYW7n_TRWTMqUjR8hv483VR8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/5?nombre=corona",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"5"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "corona",
+									"description": "corona, \"milanesa a caballo\""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNDcwOTAsImV4cCI6MTcwOTEwNzA5MCwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFUmFtaXJvIiwiYXBwIjoiVGVzdCBKV1QifQ.eWxIsAAMi76ma4_XQXuqYW7n_TRWTMqUjR8hv483VR8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/6?rol=cervecero",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"6"
+							],
+							"query": [
+								{
+									"key": "rol",
+									"value": "cervecero",
+									"description": "\"admin\", \"bartender\", \"cervecero\", \"cocinero\", \"mozo\""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNTAzMDEsImV4cCI6MTcwOTExMDMwMSwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFSm9zZSIsImFwcCI6IlRlc3QgSldUIn0.hKy6iq8Mqxcfuu4DQGn5zPxfU_5W3dfzDHfKcULPxVk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/7?estado=listo para servir",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"7"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "listo para servir"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNTAzMDEsImV4cCI6MTcwOTExMDMwMSwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFSm9zZSIsImFwcCI6IlRlc3QgSldUIn0.hKy6iq8Mqxcfuu4DQGn5zPxfU_5W3dfzDHfKcULPxVk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNTAzMDEsImV4cCI6MTcwOTExMDMwMSwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFSm9zZSIsImFwcCI6IlRlc3QgSldUIn0.hKy6iq8Mqxcfuu4DQGn5zPxfU_5W3dfzDHfKcULPxVk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/9?numMesa=2&empleado=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"9"
+							],
+							"query": [
+								{
+									"key": "numMesa",
+									"value": "2"
+								},
+								{
+									"key": "empleado",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNTAzMDEsImV4cCI6MTcwOTExMDMwMSwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFSm9zZSIsImFwcCI6IlRlc3QgSldUIn0.hKy6iq8Mqxcfuu4DQGn5zPxfU_5W3dfzDHfKcULPxVk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/10?numMesa=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"10"
+							],
+							"query": [
+								{
+									"key": "numMesa",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "11",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cliente",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "puntuarLaMesa",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "puntuarElRestaurante",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "puntuarLaMozo",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "puntuarLaCocinero",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "experiencia",
+									"value": "aaaa",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "12",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNTAzMDEsImV4cCI6MTcwOTExMDMwMSwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFSm9zZSIsImFwcCI6IlRlc3QgSldUIn0.hKy6iq8Mqxcfuu4DQGn5zPxfU_5W3dfzDHfKcULPxVk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/12?ordenamiento=asc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"12"
+							],
+							"query": [
+								{
+									"key": "ordenamiento",
+									"value": "asc",
+									"description": "asc / desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "13",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNTAzMDEsImV4cCI6MTcwOTExMDMwMSwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFSm9zZSIsImFwcCI6IlRlc3QgSldUIn0.hKy6iq8Mqxcfuu4DQGn5zPxfU_5W3dfzDHfKcULPxVk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "14",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNTAzMDEsImV4cCI6MTcwOTExMDMwMSwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFSm9zZSIsImFwcCI6IlRlc3QgSldUIn0.hKy6iq8Mqxcfuu4DQGn5zPxfU_5W3dfzDHfKcULPxVk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/14",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"14"
+							],
+							"query": [
+								{
+									"key": "sector",
+									"value": "candyBar",
+									"description": "barra / chopera / cocina / candyBar",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "15",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkwNTAzMDEsImV4cCI6MTcwOTExMDMwMSwiYXVkIjoiYjIxOWMzZTMyODljYWRlNGZiMjc2MTdlOGYwZTYwMGRlNTc3YTFhZiIsImRhdGEiOiJFSm9zZSIsImFwcCI6IlRlc3QgSldUIn0.hKy6iq8Mqxcfuu4DQGn5zPxfU_5W3dfzDHfKcULPxVk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"15"
+							],
+							"query": [
+								{
+									"key": "sector",
+									"value": "candyBar",
+									"description": "barra / chopera / cocina / candyBar",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "16",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"16"
+							],
+							"query": [
+								{
+									"key": "sector",
+									"value": "candyBar",
+									"description": "barra / chopera / cocina / candyBar",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "17",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/17",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"17"
+							],
+							"query": [
+								{
+									"key": "sector",
+									"value": "candyBar",
+									"description": "barra / chopera / cocina / candyBar",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "18",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "19",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "20",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"20"
+							],
+							"query": [
+								{
+									"key": "empleado",
+									"value": "3",
+									"description": "\"id del empleado\"",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "21",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/21",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "22",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/TP-ProgramacionIII/app/ejerciciosNew/22?numMesa=2&fechaDe=2024-02-26&fechaHasta=2024-02-27",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"TP-ProgramacionIII",
+								"app",
+								"ejerciciosNew",
+								"22"
+							],
+							"query": [
+								{
+									"key": "numMesa",
+									"value": "2"
+								},
+								{
+									"key": "fechaDe",
+									"value": "2024-02-26"
+								},
+								{
+									"key": "fechaHasta",
+									"value": "2024-02-27"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

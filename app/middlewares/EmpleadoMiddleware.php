@@ -15,22 +15,22 @@ class EmpleadoMiddleware {
     
         try {
             AutentificadorJWT::verificarToken($token);
-            $datos = AutentificadorJWT::ObtenerData($token);
-            $empleado = Empleado::obtenerEmpleadoSegunNombre($datos->empleado);
+            $dato = AutentificadorJWT::ObtenerData($token);
+            $empleado = Empleado::obtenerEmpleadoSegunNombre($dato);
 
-            if (!empty($empleado)) {
+            if (!empty($empleado) && $empleado !== false) {
                 $esValido = true;
             }
         } catch (Exception $e) {
             $response = new ResponseMW();
-            $response->getBody()->write("JWV NO Valido");
+            $response->getBody()->write("JWV NO Valido (validar Bearer Token)" . $e);
         }
     
         if ($esValido) {
             $response = $handler->handle($request);
         } else { 
             $response = new ResponseMW();
-            $response->getBody()->write("User NO Valido");
+            $response->getBody()->write("User NO Valido (validar Bear)");
         }
         
         return $response;
@@ -41,18 +41,83 @@ class EmpleadoMiddleware {
         $token = trim(explode("Bearer", $header)[1]);
         $response = new ResponseMW();
         $data = AutentificadorJWT::ObtenerData($token);
-        $empleado = Empleado::obtenerEmpleadoSegunNombre($data->empleado);
+        $empleado = Empleado::obtenerEmpleadoSegunNombre($data);
 
-        if (!empty($empleado)) {
+        if (!empty($empleado) || $empleado !== false)  {
             if (strcmp($empleado->rol, 'admin') === 0) {
                 $response = $handler->handle($request);
             } else {
-                $response->getBody()->write("Acceso no valido NO es admin");
+                $response->getBody()->write("Acceso no valido NO es ADMIN");
             }
         } else {
             $response->getBody()->write("No se encotró este usuario");
         }
         
+        return $response;
+    }
+    public function ValidarSoloMoso(Request $request, RequestHandler $handler) : ResponseMW 
+    {
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $response = new ResponseMW();
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::obtenerEmpleadoSegunNombre($data);
+
+        if (!empty($empleado) && $empleado !== false) {
+            if (strcmp($empleado->rol, 'mozo') === 0) {
+                $response = $handler->handle($request);
+            } else {
+                $response->getBody()->write("Acceso no valido NO es puede ser MOZO");
+            }
+        } else {
+            $response->getBody()->write("No se encotró este usuario");
+        }
+
+        return $response;
+    }
+    public function ValidarQueSeaDelMismoSectorQueSeQuiereModificar(Request $request, RequestHandler $handler) : ResponseMW 
+    {
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $response = new ResponseMW();
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::obtenerEmpleadoSegunNombre($data);
+
+        if (!empty($empleado) && $empleado !== false) {
+            $parametros = $request->getQueryParams();
+            $tipo = $parametros['tipo'];
+            $rol = Empleado::RolSegunTipoDeSectorDelEmpleado($tipo);
+
+            if (strcmp($rol, $empleado->rol) === 0) {
+                $response = $handler->handle($request);
+            } else {
+                $response->getBody()->write("No puedes modificar " . $tipo . " si no tienes sus permisos. (modificar Bearer Token al correcto)");
+            }
+        } else {
+            $response->getBody()->write("No se encotró este usuario");
+        }
+        return $response;
+    }
+    public function ValidarQueSeaDelMismoRolQueSeQuiereModificar(Request $request, RequestHandler $handler) : ResponseMW 
+    {
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $response = new ResponseMW();
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::obtenerEmpleadoSegunNombre($data);
+
+        if (!empty($empleado) && $empleado !== false) {
+            $parametros = $request->getQueryParams();
+            $rol = $parametros['rol'];
+
+            if (strcmp($rol, $empleado->rol) === 0) {
+                $response = $handler->handle($request);
+            } else {
+                $response->getBody()->write("No puedes modificar " . $rol . " si no tienes sus permisos. (modificar Bearer Token al correcto)");
+            }
+        } else {
+            $response->getBody()->write("No se encotró este usuario");
+        }
         return $response;
     }
     public function EmpleadoDisponible(Request $request, RequestHandler $handler) : ResponseMW 
@@ -64,7 +129,7 @@ class EmpleadoMiddleware {
             $empleado = Empleado::obtenerEmpleado($idEmpelado);
             $response = new ResponseMW();
 
-            if (!empty($empleado)) {
+            if (!empty($empleado) && $empleado !== false && $empleado !== []) {
                 if (strcmp($empleado->estado, "desocupado") === 0) {
                     $response = $handler->handle($request);
                 } else {
@@ -91,20 +156,7 @@ class EmpleadoMiddleware {
 
             $response = new ResponseMW();
             if (!empty($plato) && !empty($moso)) {
-                switch ($moso->rol) {
-                    case 'bartender':
-                        $tipo = 'barra';
-                        break;
-                    case 'cervecero':
-                        $tipo = 'chopera';
-                        break;
-                    case 'mozo':
-                        $tipo = 'candyBar';
-                        break;
-                    default:
-                        $tipo = 'cocina';
-                        break;
-                }
+                $tipo = Empleado::TipoDeRolEegunEmpleado($moso->rol);
                 if (strcmp($plato->tipo, $tipo) === 0) {
                     $response = $handler->handle($request);
                 }
